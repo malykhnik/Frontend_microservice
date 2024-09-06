@@ -24,8 +24,14 @@ export const checkAndRefreshTokens = async (navigate) => {
                 const {accessToken: newAccessToken, refreshToken: newRefreshToken} = response.data;
 
                 // Сохранение токенов в localStorage
-                localStorage.setItem('accessToken', accessToken);
-                localStorage.setItem('refreshToken', refreshToken);
+                localStorage.setItem('accessToken', newAccessToken);
+                localStorage.setItem('refreshToken', newRefreshToken);
+
+                //отправка токенов в микросервис эндпоинтов
+                await axios.post('http://localhost:8082/api/endpoints/setJwt',
+                    {
+                        token: newAccessToken
+                    });
 
                 // Перенаправление на Checker
                 navigate('/checker');

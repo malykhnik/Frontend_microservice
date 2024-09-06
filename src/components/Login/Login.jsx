@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import './Login.css';
 import {useNavigate} from "react-router-dom";
@@ -19,11 +19,17 @@ function Login() {
             });
 
             // Извлечение токенов из ответа
-            const { accessToken, refreshToken } = response.data;
+            const {accessToken, refreshToken} = response.data;
 
             // Сохранение токенов в localStorage
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('refreshToken', refreshToken);
+
+            //отправка токенов в микросервис эндпоинтов
+             await axios.post('http://localhost:8082/api/endpoints/setJwt',
+                 {
+                     token: accessToken
+                 });
 
             navigate('/checker');
         } catch (error) {
@@ -58,7 +64,8 @@ function Login() {
                 </div>
                 {error && <p className="error-message">{error}</p>}
                 <button type="submit">Login</button>
-                <button  onClick={() => navigate('/register')} type="submit" className="go_to_register">Go to Register</button>
+                <button onClick={() => navigate('/register')} type="submit" className="go_to_register">Go to Register
+                </button>
             </form>
         </div>
     );
