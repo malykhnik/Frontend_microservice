@@ -1,0 +1,111 @@
+/* Общие стили для блока */
+.block {
+    width: 100%;
+    height: 100vh; /* Высота экрана */
+    padding: 20px;
+    box-sizing: border-box;
+    margin: 0 auto; /* Центрируем блок */
+    display: flex;
+    flex-direction: column; /* Распределяем элементы по вертикали */
+    align-items: center; /* ВЫРАВНИВАЕТ ПО ГОРИЗОНТАЛИ */
+}
+
+/* Заголовок */
+.block h2 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Сетка для карточек */
+.row {
+    display: flex;
+    flex-wrap: wrap; /* Позволяет карточкам переноситься на следующую строку */
+    gap: 20px; /* Расстояние между карточками */
+}
+
+/* Стиль карточки */
+.card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+    text-decoration: none;
+    color: inherit;
+    flex: 1 1 calc(33.33% - 20px); /* Карточки занимают 1/3 доступного пространства с учетом отступов */
+    min-width: 300px; /* Минимальная ширина карточки */
+    max-width: calc(33.33% - 20px); /* Максимальная ширина карточки */
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* URL и время */
+.url {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007BFF;
+}
+
+.time {
+    margin-bottom: 20px;
+    color: #666;
+}
+
+/* Стили для списка сервисов */
+.list_services .info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Статусы сервисов */
+.green, .red, .black {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.green {
+    background-color: #28a745;
+}
+
+.red {
+    background-color: #dc3545;
+}
+
+.black {
+    background-color: #343a40;
+}
+
+/* Информация об эндпоинте */
+.endpoint_info {
+    font-weight: bold;
+    flex: 1;
+}
+
+/* Статус */
+.status {
+    color: #666;
+}
+
+/* Стили для CRUD-статусов */
+.user_may {
+    margin-top: 10px;
+}
+
+.crud_status {
+    font-size: 0.9em;
+    color: #28a745;
+    margin-top: 5px;
+}
+
+.crud_status_left {
+    margin-left: 20px;
+}
