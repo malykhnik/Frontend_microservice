@@ -6,33 +6,45 @@ import './Checker.css';
 import {checkAndRefreshTokens} from '../Auth/Auth';
 import axios from 'axios';
 import Modal from "../Modal/Modal.jsx";
+import { FaCog } from 'react-icons/fa';
+import IncidentsModal from "../IncidentModal/IncidentModal.jsx"; // иконка шестерёнки
 
 // Компонент для отображения статуса здоровья сервисов
-const ServiceHealthStatus = ({ endpoints, onClickCard }) => {
+const ServiceHealthStatus = ({ endpoints, onClickCard, onClickIncidents }) => {
+    const [showIncidentsModal, setShowIncidentsModal] = useState(false);
+    const [showSettingsModal, setShowSettingsModal] = useState(false);
+
     return (
         <div className="block">
-            <h2>Мониторинг сервисов</h2>
+            <div className="header-bar">
+                <div className="system-title">Система мониторинга</div>
+                <div className="header-actions">
+                    <button className="incidents-button" onClick={onClickIncidents}>
+                        Инциденты
+                    </button>
+                    <button className="settings-button" onClick={() => setShowSettingsModal(true)}>
+                        <FaCog />
+                    </button>
+                </div>
+            </div>
             <div className="row">
                 {endpoints.map((el, index) => (
                     <div className="card" key={index} onClick={() => onClickCard(el.url)}>
                         <div className="url"><span>{el.url}</span></div>
                         <div className="time"><span className="head_time">Время: </span><span>{el.time}</span></div>
                         <div className="list_services">
-                            {
-                                el.services.map((service, idx) => (
-                                        <div className="info" key={idx}>
-                                            {service.status === "active" && <div className="green"></div>}
-                                            {service.status === "inactive" && <div className="red"></div>}
-                                            {service.status === "no connection" && <div className="black"></div>}
-                                            <div className="endpoint_info"><span>{service.name}</span></div>
-                                            <div className="status"><span>{service.status}</span></div>
-                                        </div>
-                                    )
-                                )
-                            }
+                            {el.services.map((service, idx) => (
+                                <div className="info" key={idx}>
+                                    {service.status === "active" && <div className="green"></div>}
+                                    {service.status === "inactive" && <div className="red"></div>}
+                                    {service.status === "no connection" && <div className="black"></div>}
+                                    <div className="endpoint_info"><span>{service.name}</span></div>
+                                    <div className="status"><span>{service.status}</span></div>
+                                </div>
+                            ))}
                             {el.services.map((service, idx) => (
                                 service.crud_status && (
-                                    <div className="user_may" key={idx}>
+                                    <div className="user_may" key={`crud-${idx}`}>
                                         {service.crud_status.create && (
                                             <div className="crud_status">
                                                 <span className="crud_status_left">CREATE: доступно </span>
@@ -74,6 +86,11 @@ export default function Checker() {
     const [modalData, setModalData] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedUrl, setSelectedUrl] = useState("");
+    const [showIncidentsModal, setShowIncidentsModal] = useState(false);
+
+    const handleOpenIncidents = () => {
+        setShowIncidentsModal(true);
+    };
 
     useEffect(() => {
         checkAndRefreshTokens(navigate);
@@ -113,8 +130,9 @@ export default function Checker() {
 
     return (
         <div>
-            <ServiceHealthStatus endpoints={endpoints} onClickCard={handleCardClick} />
+            <ServiceHealthStatus endpoints={endpoints} onClickCard={handleCardClick} onClickIncidents={handleOpenIncidents} />
             <Modal isOpen={isModalOpen} onClose={closeModal} data={modalData || {}} url={selectedUrl} />
+            <IncidentsModal isOpen={showIncidentsModal} onClose={() => setShowIncidentsModal(false)} />
         </div>
     );
 }

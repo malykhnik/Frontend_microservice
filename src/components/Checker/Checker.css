@@ -1,34 +1,26 @@
-/* Общие стили для блока */
+/* Контейнер всей страницы */
+.root {
+    width: 1660px;
+}
+
 .block {
-    width: 100%; /* Заменяем 100vh на 100% для правильной ширины */
-    height: 100vh;
+    width: 100%;
+    min-height: 100vh;
     padding: 20px;
     box-sizing: border-box;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Центрируем дочерние элементы по горизонтали */
 }
 
-/* Заголовок */
-.block h2 {
-    text-align: center;
-    font-size: 2em;
-    margin-bottom: 20px;
-    margin-left: 120%;
-    color: #333;
-    width: 100%; /* Чтобы текст центрировался в рамках всей ширины .block */
-}
-
-/* Сетка для карточек */
 .row {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: center; /* Центрируем карточки внутри .row */
+    justify-content: center; /* Центрируем карточки по горизонтали */
+    width: 100%;
 }
 
-/* Стиль карточки */
+/* Сделаем карточки адаптивными */
 .card {
     background-color: #ffffff;
     border-radius: 10px;
@@ -37,8 +29,70 @@
     padding: 20px;
     text-decoration: none;
     color: inherit;
-    width: 300px;
+    width: calc(100% / 3 - 40px); /* адаптивно: 3 карточки в ряд */
+    max-width: 360px;
+    min-width: 280px;
     height: 280px;
+}
+
+@media (max-width: 1024px) {
+    .card {
+        width: calc(50% - 40px);
+    }
+}
+
+@media (max-width: 600px) {
+    .card {
+        width: 100%;
+    }
+}
+
+
+/* Шапка */
+.header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: #007bff 1px solid;
+}
+
+.system-title {
+    font-size: 1.8em;
+    font-weight: bold;
+    text-align: center;
+    flex: 1;
+    color: #333;
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Кнопки шапки */
+.incidents-button,
+.settings-button {
+    background-color: #007BFF;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.settings-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+}
+
+.incidents-button:hover,
+.settings-button:hover {
+    background-color: #0056b3;
 }
 
 .card:hover {
@@ -59,7 +113,6 @@
     color: #666;
 }
 
-/* Стили для списка сервисов */
 .list_services .info {
     display: flex;
     align-items: center;
@@ -86,18 +139,15 @@
     background-color: #343a40;
 }
 
-/* Информация об эндпоинте */
 .endpoint_info {
     font-weight: bold;
     flex: 1;
 }
 
-/* Статус */
 .status {
     color: #666;
 }
 
-/* Стили для CRUD-статусов */
 .user_may {
     margin-top: 10px;
 }
@@ -110,4 +160,17 @@
 
 .crud_status_left {
     margin-left: 20px;
+}
+
+/* Простейший стиль модального окна */
+.modal {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
